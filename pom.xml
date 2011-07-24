@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.bertvanbrakel</groupId>
+    <artifactId>bertvanbrakel-android-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>bertvanbrakel - Android - Generic Parent Pom</name>
+    <description>A generic pom to be used when building android apps using maven. Keeps all the messy cruft out of the project poms</description>
+    <inceptionYear>2010</inceptionYear>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    <scm />
+    <issueManagement />
+    <licenses />
+    <mailingLists />
+    <developers>
+        <developer>
+            <name>Bert van Brakel</name>
+            <email>bertvanbrakel@gmail.com</email>
+            <url>http://www.bertvanbrakel.com/</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <configuration>
+                        <archive>
+                            <manifestEntries>
+                                <!-- android and tools only support java 1.5 sources and classes. if not using 1.5 the eclipse
+                                android plugin gets confused -->
+                                <Build-Source-Version>1.5</Build-Source-Version>
+                                <Build-Target-Version>1.5</Build-Target-Version>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <!-- set compile src and target versions -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+					     <!-- android and tools only support java 1.5 sources and classes. if not using 1.5 the eclipse
+                            android plugin gets confused -->
+						<source>1.5</source>
+						<target>1.5</target>
+					</configuration>
+				</plugin>
+				<!-- always attach sources to the generated output -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<phase>package</phase>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!--
+					make the test output appear on the console, and fail builds
+					on broken tests
+				-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<reportFormat>brief</reportFormat>
+						<useFile>false</useFile>
+					</configuration>
+				</plugin>
+				<!-- plugin to compile into the android dalvik format -->
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>maven-android-plugin</artifactId>
+                    <version>2.8.3</version>
+                    <configuration>
+                        <deleteConflictingFiles>true</deleteConflictingFiles>
+                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    </configuration>
+                </plugin>
+                <!-- plugin to use to strip down and optimise android install packages so they are smaller and run faster on the phone -->
+                <plugin>
+                    <groupId>com.pyx4me</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>2.0.4</version>
+                    <executions>
+                        <execution>
+                            <phase>process-classes</phase>
+                            <goals>
+                                <goal>proguard</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <injar>android-classes</injar>
+                        <libs>
+                            <lib>${java.home}/lib/rt.jar</lib>
+                        </libs>
+                        <obfuscate>false</obfuscate>
+                        <options>
+                            <!-- look for a 'progaurd.cfg' file in the project dir containing all the options -->
+                            <option>@proguard.cfg</option>
+                        </options>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId> 
+	                        <artifactId>proguard</artifactId> 
+	                        <version>4.4</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <!-- keep the eclipse maven plugin happy? wtf? - bert http://dev.eclipse.org/mhonarc/lists/m2e-dev/msg00083.html -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>2.4.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>1.0-beta-1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>2.3.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-scm-plugin</artifactId>
+                    <version>1.3</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.4.3</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.5</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>1.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
+
