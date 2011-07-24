@@ -6,7 +6,7 @@
     <artifactId>bertvanbrakel-android-parent-pom</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>bertvanbrakel - Android - Generic Parent Pom</name>
+    <name>com.bertvanbrakel - Android - Generic Parent Pom</name>
     <description>A generic pom to be used when building android apps using maven. Keeps all the messy cruft out of the project poms</description>
     <inceptionYear>2010</inceptionYear>
     <properties>
@@ -107,7 +107,7 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.0-SNAPSHOT</version>
+                <version>3.0</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
