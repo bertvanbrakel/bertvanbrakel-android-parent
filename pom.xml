@@ -3,10 +3,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.bertvanbrakel</groupId>
-    <artifactId>bertvanbrakel-android-parent-pom</artifactId>
+    <artifactId>bertvanbrakel-android-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>com.bertvanbrakel - Android - Generic Parent Pom</name>
+    <name>com.bertvanbrakel - Android - Parent POM</name>
     <description>A generic pom to be used when building android apps using maven. Keeps all the messy cruft out of the project poms</description>
     <inceptionYear>2010</inceptionYear>
     <properties>
